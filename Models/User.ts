@@ -9,17 +9,13 @@ interface IUser extends Document {
   username: string;
   password: string;
   name?: string;
-  email?: string;
+  email: string;
   ip: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  address?: IAddress;
+  createdAt: Date;
+  updatedAt: Date;
+  address: IAddress;
 }
 
-const addressSchema: Schema<IAddress> = new Schema({
-  street: String,
-  city: String,
-});
 
 const userSchema: Schema<IUser> = new Schema({
   username: {
@@ -48,7 +44,6 @@ const userSchema: Schema<IUser> = new Schema({
     type: Date,
     default: () => Date.now(),
   },
-  address: addressSchema,
 });
 
 export default mongoose.model<IUser>("User", userSchema);

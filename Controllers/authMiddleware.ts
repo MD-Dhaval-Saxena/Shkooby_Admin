@@ -1,10 +1,11 @@
-import jwt,{Secret ,JwtPayload} from "jsonwebtoken";
+import jwt, { Secret, JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
+import dotenv from "dotenv";
+dotenv.config();
 
+export const SECRET_KEY: Secret = "your-secret-key-here";
 
-export const SECRET_KEY: Secret = 'your-secret-key-here';
-
-const errorMessage = (res: Response) => {
+export const errorMessage = (res: Response) => {
   return res.status(401).json({
     status: "fail",
     message: "Authorization denied, user is not logged in.",
@@ -12,28 +13,27 @@ const errorMessage = (res: Response) => {
 };
 
 export interface CustomRequest extends Request {
-    token: string | JwtPayload;
-   }
+  token: string | JwtPayload;
+}
+
 // changes made for testing
-const auth = async (req: Request , res: Request, next: NextFunction) => {
+ const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.header("x-auth-token");
     if (!token) {
-    //   return errorMessage(res);
-    throw new Error();
+      return errorMessage(res);
     }
 
-    const verified :any = jwt.verify(token, SECRET_KEY );
+    const verified = jwt.verify(token, SECRET_KEY);
     if (!verified) {
-    //   return errorMessage(res);
-    throw new Error();
+      return errorMessage(res);
     }
 
-    (req  as CustomRequest).token = verified.id;
+    (req as CustomRequest).token = verified;
     next();
   } catch {
     // return errorMessage(res);
-    throw new Error();
+    res.status(401).send("Please authenticate");
   }
 };
 

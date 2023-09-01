@@ -13,8 +13,10 @@ const errorMessage = (res: Response, error: Error) => {
 };
 
 export const registerUser = async (req: Request, res: Response) => {
+    console.log("registerUser");
   try {
-    const { username, password, email, balance } = req.body;
+    const { username, password, email } = req.body;
+    console.log(req.body);
     if (!username || !password) {
       return res.status(200).json({
         status: "fail",
@@ -44,13 +46,14 @@ export const registerUser = async (req: Request, res: Response) => {
     const newUser = new userModal({
       username,
       password: hashedPassword,
-      email: email,
-      balance: balance,
+      email: email
+    //   balance: balance,
     });
 
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (error : any | unknown )  {
+    console.log(error);
     return errorMessage(res, error);
   }
 };
@@ -88,7 +91,7 @@ export const loginUser = async (req: Request, res: Response) => {
       token,
       user: {
         username,
-        id: user._id,
+        id: user._id
         // balance: user.balance,
       },
     });

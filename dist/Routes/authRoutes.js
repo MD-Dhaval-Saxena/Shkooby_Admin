@@ -22,35 +22,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importStar(require("mongoose"));
-const userSchema = new mongoose_1.Schema({
-    username: {
-        type: String,
-        unique: true,
-        required: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    name: {
-        type: String,
-        lowercase: true,
-    },
-    email: {
-        type: String,
-        unique: true,
-    },
-    ip: Number,
-    createdAt: {
-        type: Date,
-        default: () => Date.now(),
-    },
-    updatedAt: {
-        type: Date,
-        default: () => Date.now(),
-    },
-});
-exports.default = mongoose_1.default.model("User", userSchema);
-//# sourceMappingURL=User.js.map
+const express_1 = __importDefault(require("express"));
+const authMiddleware_1 = __importDefault(require("../Controllers/authMiddleware"));
+const userController_1 = require("../Controllers/userController");
+const authController = __importStar(require("../Controllers/AuthController"));
+const router = express_1.default.Router();
+router.post("/registerUser", authController.registerUser);
+router.post("/loginUser", authController.loginUser);
+router.post("/validate", authController.validate);
+// router.post("/updateProfile", updateProfile);
+router.post("/viewProfile", authController.viewProfile);
+router.get("/user", authMiddleware_1.default, userController_1.getUser);
+exports.default = router;
+//# sourceMappingURL=authRoutes.js.map

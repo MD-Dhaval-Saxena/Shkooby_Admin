@@ -23,8 +23,10 @@ const errorMessage = (res, error) => {
     return res.status(400).json({ status: "fail", message: error.message });
 };
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("registerUser");
     try {
-        const { username, password, email, balance } = req.body;
+        const { username, password, email } = req.body;
+        console.log(req.body);
         if (!username || !password) {
             return res.status(200).json({
                 status: "fail",
@@ -51,13 +53,14 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const newUser = new User_1.default({
             username,
             password: hashedPassword,
-            email: email,
-            balance: balance,
+            email: email
+            //   balance: balance,
         });
         const savedUser = yield newUser.save();
         res.status(201).json(savedUser);
     }
     catch (error) {
+        console.log(error);
         return errorMessage(res, error);
     }
 });
@@ -90,7 +93,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             token,
             user: {
                 username,
-                id: user._id,
+                id: user._id
                 // balance: user.balance,
             },
         });

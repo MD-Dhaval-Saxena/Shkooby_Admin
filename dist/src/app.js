@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     return console.log(`Express is listening at http://localhost:${port}`);
 });
+// export {}
 // require("dotenv").config();
 // const express = require("express");
 // const db = require("./db");
