@@ -13,7 +13,7 @@ app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send(`Hello World! ${req.ip}`);
 });
 app.listen(port, () => {
     return console.log(`Express is listening at http://localhost:${port}`);
