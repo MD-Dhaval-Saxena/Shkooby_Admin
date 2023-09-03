@@ -120,21 +120,28 @@ export const validate = async (req: Request, res: Response) => {
     return res.json(false);
   }
 };
+export const test = async (req: Request, res: Response) => {
+  try {
+    return res.send( "hello ");
+  } catch (error) {
+    return res.json(error);
+  }
+};
 
-// export const updateProfile = async (req: Request, res: Response) => {
-//   let { username, name, upi } = req.body;
-//   try {
-//     let update = await userModal.findOneAndUpdate(
-//       { username: username },
-//       { name: name, upi: upi },
-//       { new: true }
-//     );
+export const updateProfile = async (req: Request, res: Response) => {
+  let { username, name, upi } = req.body;
+  try {
+    let update = await userModal.findOneAndUpdate(
+      { username: username },
+      { name: name, upi: upi },
+      { new: true }
+    );
    
-//     return res.json(update);
-//   } catch (error) {
-//     return res.json(false);
-//   }
-// };
+    return res.json(update);
+  } catch (error) {
+    return res.json(false);
+  }
+};
 
 export const viewProfile = async (req: Request, res: Response) => {
   let { username } = req.body;

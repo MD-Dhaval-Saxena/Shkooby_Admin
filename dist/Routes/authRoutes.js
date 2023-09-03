@@ -34,7 +34,7 @@ const router = express_1.default.Router();
 router.post("/registerUser", authController.registerUser);
 router.post("/loginUser", authController.loginUser);
 router.post("/validate", authController.validate);
-// router.post("/updateProfile", updateProfile);
+router.post("/updateProfile", authController.updateProfile);
 router.post("/viewProfile", authController.viewProfile);
 router.get("/user", authMiddleware_1.default, userController_1.getUser);
 exports.default = router;

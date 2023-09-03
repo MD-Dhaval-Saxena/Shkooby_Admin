@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.viewProfile = exports.validate = exports.loginUser = exports.registerUser = void 0;
+exports.viewProfile = exports.updateProfile = exports.test = exports.validate = exports.loginUser = exports.registerUser = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const User_1 = __importDefault(require("../Models/User"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
@@ -124,19 +124,26 @@ const validate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.validate = validate;
-// export const updateProfile = async (req: Request, res: Response) => {
-//   let { username, name, upi } = req.body;
-//   try {
-//     let update = await userModal.findOneAndUpdate(
-//       { username: username },
-//       { name: name, upi: upi },
-//       { new: true }
-//     );
-//     return res.json(update);
-//   } catch (error) {
-//     return res.json(false);
-//   }
-// };
+const test = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        return res.send("hello ");
+    }
+    catch (error) {
+        return res.json(error);
+    }
+});
+exports.test = test;
+const updateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let { username, name, upi } = req.body;
+    try {
+        let update = yield User_1.default.findOneAndUpdate({ username: username }, { name: name, upi: upi }, { new: true });
+        return res.json(update);
+    }
+    catch (error) {
+        return res.json(false);
+    }
+});
+exports.updateProfile = updateProfile;
 const viewProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let { username } = req.body;
     let update = yield User_1.default.findOneAndUpdate({ username: username }, { name: "jay" }, { new: true });
